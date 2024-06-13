@@ -1,40 +1,41 @@
-const db = require('../library/database');
+const db = require("../library/database");
 
 const Category = {
-  create: async (categoryData, callback) => {
-    const { name } = categoryData;
-    const sql = 'INSERT INTO tbl_categories (name_categories) VALUES (?)';
+  create: async (categoryData) => {
+    const { name_categories } = categoryData;
+    const sql = "INSERT INTO tbl_categories (name_categories) VALUES (?)";
     try {
-      const [result] = await db.query(sql, [name]);
-      callback(null, result);
+      const [result] = await db.query(sql, [name_categories]);
+      return result;
     } catch (err) {
-      callback(err);
+      throw err;
     }
   },
 
-  update: async (id, categoryData, callback) => {
-    const { name } = categoryData;
-    const sql = 'UPDATE tbl_categories SET name_categories = ? WHERE id_categories = ?';
+  update: async (id, categoryData) => {
+    const { name_categories } = categoryData;
+    const sql =
+      "UPDATE tbl_categories SET name_categories = ? WHERE id_categories = ?";
     try {
-      const [result] = await db.query(sql, [name, id]);
-      callback(null, result);
+      const [result] = await db.query(sql, [name_categories, id]);
+      return result;
     } catch (err) {
-      callback(err);
+      throw err;
     }
   },
 
-  delete: async (id, callback) => {
-    const sql = 'DELETE FROM tbl_categories WHERE id_categories = ?';
+  delete: async (id) => {
+    const sql = "DELETE FROM tbl_categories WHERE id_categories = ?";
     try {
       const [result] = await db.query(sql, [id]);
-      callback(null, result);
+      return result;
     } catch (err) {
-      callback(err);
+      throw err;
     }
   },
 
   findById: async (id) => {
-    const sql = 'SELECT * FROM tbl_categories WHERE id_categories = ?';
+    const sql = "SELECT * FROM tbl_categories WHERE id_categories = ?";
     try {
       const [result] = await db.query(sql, [id]);
       return result[0];
@@ -43,13 +44,13 @@ const Category = {
     }
   },
 
-  findAll: async (callback) => {
-    const sql = 'SELECT * FROM tbl_categories';
+  findAll: async () => {
+    const sql = "SELECT * FROM tbl_categories";
     try {
       const [result] = await db.query(sql);
-      callback(null, result);
+      return result;
     } catch (err) {
-      callback(err);
+      throw err;
     }
   },
 };

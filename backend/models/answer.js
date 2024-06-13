@@ -1,9 +1,10 @@
-const db = require('../library/database');
+const db = require("../library/database");
 
 const Answer = {
   create: async (answerData) => {
     const { user_id, discussion_id, answer } = answerData;
-    const sql = 'INSERT INTO tbl_answers (user_id, discussion_id, answer, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())';
+    const sql =
+      "INSERT INTO tbl_answers (user_id, discussion_id, answer, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())";
     try {
       const [result] = await db.query(sql, [user_id, discussion_id, answer]);
       return result;
@@ -11,20 +12,26 @@ const Answer = {
       throw err;
     }
   },
-  
+
   update: async (id, answerData) => {
     const { user_id, discussion_id, answer } = answerData;
-    const sql = 'UPDATE tbl_answers SET user_id = ?, discussion_id = ?, answer = ?, updated_at = NOW() WHERE id_answer = ?';
+    const sql =
+      "UPDATE tbl_answers SET user_id = ?, discussion_id = ?, answer = ?, updated_at = NOW() WHERE id_answer = ?";
     try {
-      const [result] = await db.query(sql, [user_id, discussion_id, answer, id]);
+      const [result] = await db.query(sql, [
+        user_id,
+        discussion_id,
+        answer,
+        id,
+      ]);
       return result;
     } catch (err) {
       throw err;
     }
   },
-  
+
   delete: async (id) => {
-    const sql = 'DELETE FROM tbl_answers WHERE id_answer = ?';
+    const sql = "DELETE FROM tbl_answers WHERE id_answer = ?";
     try {
       const [result] = await db.query(sql, [id]);
       return result;
@@ -34,17 +41,17 @@ const Answer = {
   },
 
   findById: async (id) => {
-    const sql = 'SELECT * FROM tbl_answers WHERE id_answer = ?';
+    const sql = "SELECT * FROM tbl_answers WHERE id_answer = ?";
     try {
-        const [result] = await db.query(sql, [id]);
-        return result[0]; 
+      const [result] = await db.query(sql, [id]);
+      return result[0];
     } catch (err) {
-        throw err; 
+      throw err;
     }
   },
 
   findAll: async () => {
-    const sql = 'SELECT * FROM tbl_answers';
+    const sql = "SELECT * FROM tbl_answers";
     try {
       const [result] = await db.query(sql);
       return result;
