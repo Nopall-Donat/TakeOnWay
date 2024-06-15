@@ -35,6 +35,7 @@ exports.deleteUser = (req, res) => {
       console.error("Failed to delete user:", err);
       res.status(500).send("Failed to delete user");
     });
+  User.autoInc();
 };
 
 exports.getUserById = (req, res) => {

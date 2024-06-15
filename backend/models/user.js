@@ -65,6 +65,15 @@ const User = {
       throw err;
     }
   },
+  
+  autoInc: async () => {
+    const sql = "alter table tbl_users auto_increment = 0;";
+    try {
+      return await db.query(sql);
+    } catch (err) {
+      throw err;
+    }
+  },
 };
 
 module.exports = User;
