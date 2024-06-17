@@ -30,6 +30,16 @@ exports.deleteDiscussion = (req, res) => {
   Discussion.delete(id)
     .then((result) => {
       res.status(200).send("Discussion deleted successfully");
+      Discussion.findAll().then(discussions => {
+        discussions.forEach((e, i) => {
+          if(e.id_discussion > id) {
+            let oldId = e.id_discussion;
+            let newId = e.id_discussion - 1;
+            Discussion.resetId(oldId, newId)
+          }
+        });
+      })
+      Discussion.autoInc();
     })
     .catch((err) => {
       console.error("Failed to delete discussion:", err);

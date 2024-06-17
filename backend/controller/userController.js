@@ -30,12 +30,21 @@ exports.deleteUser = (req, res) => {
   User.delete(id)
     .then((result) => {
       res.status(200).send("User deleted successfully");
+      User.findAll().then(users => {
+        users.forEach((e, i) => {
+          if(e.id_user > id) {
+            let oldId = e.id_user;
+            let newId = e.id_user - 1;
+            User.resetId(oldId, newId)
+          }
+        });
+      })
+      User.autoInc();
     })
     .catch((err) => {
       console.error("Failed to delete user:", err);
       res.status(500).send("Failed to delete user");
     });
-  User.autoInc();
 };
 
 exports.getUserById = (req, res) => {
@@ -59,4 +68,4 @@ exports.getAllUsers = (req, res) => {
       console.error("Failed to get users:", err);
       res.status(500).send("Failed to get users");
     });
-};
+  };

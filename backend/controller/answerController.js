@@ -30,6 +30,16 @@ exports.deleteAnswer = (req, res) => {
   Answer.delete(id)
     .then((result) => {
       res.status(200).send("Answer deleted successfully");
+      Answer.findAll().then(answers => {
+        answers.forEach((e, i) => {
+          if(e.id_answer > id) {
+            let oldId = e.id_answer;
+            let newId = e.id_answer - 1;
+            Answer.resetId(oldId, newId)
+          }
+        });
+      })
+      Answer.autoInc();
     })
     .catch((err) => {
       console.error("Failed to delete answer:", err);

@@ -52,6 +52,24 @@ const Discussion = {
       throw err;
     }
   },
+    
+  autoInc: async () => {
+    const sql = "ALTER TABLE tbl_discussions AUTO_INCREMENT = 0;";
+    try {
+      return await db.query(sql);
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  resetId: async(id, newId) => {
+    const sql = "UPDATE tbl_discussions SET id_discussion = ? WHERE id_discussion = ?;";
+    try {
+      return await db.query(sql, [newId, id]);
+    } catch (err) {
+      throw err;
+    }
+  }
 };
 
 module.exports = Discussion;

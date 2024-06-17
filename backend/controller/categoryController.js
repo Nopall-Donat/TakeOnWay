@@ -30,6 +30,16 @@ exports.deleteCategory = (req, res) => {
   Category.delete(id)
     .then((result) => {
       res.status(200).send("Category deleted successfully");
+      Category.findAll().then(categories => {
+        categories.forEach((e, i) => {
+          if(e.id_category > id) {
+            let oldId = e.id_category;
+            let newId = e.id_category - 1;
+            Category.resetId(oldId, newId)
+          }
+        });
+      })
+      Category.autoInc();
     })
     .catch((err) => {
       console.error("Failed to delete category:", err);

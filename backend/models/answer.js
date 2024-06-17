@@ -59,6 +59,24 @@ const Answer = {
       throw err;
     }
   },
+    
+  autoInc: async () => {
+    const sql = "ALTER TABLE tbl_answers AUTO_INCREMENT = 0;";
+    try {
+      return await db.query(sql);
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  resetId: async(id, newId) => {
+    const sql = "UPDATE tbl_answers SET id_answer = ? WHERE id_answer = ?;";
+    try {
+      return await db.query(sql, [newId, id]);
+    } catch (err) {
+      throw err;
+    }
+  }
 };
 
 module.exports = Answer;

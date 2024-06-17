@@ -67,13 +67,22 @@ const User = {
   },
   
   autoInc: async () => {
-    const sql = "alter table tbl_users auto_increment = 0;";
+    const sql = "ALTER TABLE tbl_users AUTO_INCREMENT = 0;";
     try {
       return await db.query(sql);
     } catch (err) {
       throw err;
     }
   },
+
+  resetId: async(id, newId) => {
+    const sql = "UPDATE tbl_users SET id_user = ? WHERE id_user = ?;";
+    try {
+      return await db.query(sql, [newId, id]);
+    } catch (err) {
+      throw err;
+    }
+  }
 };
 
 module.exports = User;
